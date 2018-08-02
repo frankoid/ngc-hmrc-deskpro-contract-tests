@@ -5,7 +5,7 @@ function printExceptionsFromLog {
     sm --logs $1 | grep -i '^[[:space:]]*at' --before-context=7
 }
 
-SERVICES=`sm -d | grep -E '^[[:space:]]*NGC_DESKPRO_CONTRACT_TESTS' | sed -e 's/^.*=>//' | sed -e 's/,//g'`
+SERVICES=`sm -d | grep -E '^[[:space:]]*NGC_HMRC_DESKPRO_CONTRACT_TESTS' | sed -e 's/^.*=>//' | sed -e 's/,//g'`
 
 for SERVICE in $SERVICES; do
     printExceptionsFromLog $SERVICE
