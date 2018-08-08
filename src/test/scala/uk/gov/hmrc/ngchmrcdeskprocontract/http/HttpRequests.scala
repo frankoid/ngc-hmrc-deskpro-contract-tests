@@ -13,11 +13,11 @@ case class HttpRequests (wsClient: WSClient, config: ServicesConfig = new Servic
 
   private val http: TestWSHttp = new TestWSHttp(wsClient)
   private val hmrcDeskproBaseUrl: URL = new URL(config.baseUrl("hmrc-deskpro"))
-  private val createTicketUrl: URL = new URL(hmrcDeskproBaseUrl, "/deskpro/ticket")
+  private val createGetHelpTicketUrl: URL = new URL(hmrcDeskproBaseUrl, "/deskpro/get-help-ticket")
   private val createFeedbackUrl: URL = new URL(hmrcDeskproBaseUrl, "/deskpro/feedback")
 
-  def createTicket()(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[Unit] = {
-    val createTicketRequest = Json.parse(
+  def createGetHelpTicket()(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[Unit] = {
+    val createGetHelpTicketRequest = Json.parse(
       s"""
          |{
          |  "name": ???,
@@ -36,11 +36,12 @@ case class HttpRequests (wsClient: WSClient, config: ServicesConfig = new Servic
          |    "utr": ???,
          |    "vrn": ???,
          |    "empRef": ???
-         |  }
+         |  },
+         |  "service": ???
          |}
        """.stripMargin
     )
-    http.POST[JsValue, HttpRequests](createTicketUrl.toString, createTicketRequest).map { _ => () }
+    http.POST[JsValue, HttpRequests](createGetHelpTicketUrl.toString, createGetHelpTicketRequest).map { _ => () }
   }
 
   def createFeedback()(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[Unit] = {

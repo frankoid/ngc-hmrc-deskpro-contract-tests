@@ -20,13 +20,13 @@ import org.scalatest.{AsyncWordSpec, Matchers}
 import play.api.test.{DefaultAwaitTimeout, FutureAwaits}
 import uk.gov.hmrc.ngchmrcdeskprocontract.scalatest.WSClientSpec
 
-class HmrcDeskproTicketSpec extends AsyncWordSpec
+class HmrcDeskproGetHelpTicketSpec extends AsyncWordSpec
   with Matchers
   with FutureAwaits
   with DefaultAwaitTimeout
   with WSClientSpec {
 
-  "/deskpro/ticket" should {
+  "/deskpro/get-help-ticket" should {
 
     "return 200 with ticket_id for successful ticket create" in {
       ???
