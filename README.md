@@ -8,6 +8,7 @@ Contract tests for the contracts that #team-nextgenconsumer's services expect of
 ## Running locally:
 
 ```
+sm --start NGC_HMRC_DESKPRO_CONTRACT_TESTS -f
 sbt test
 ```
 

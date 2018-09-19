@@ -18,18 +18,44 @@ package uk.gov.hmrc.ngchmrcdeskprocontract.hmrcdeskpro
 
 import org.scalatest.{AsyncWordSpec, Matchers}
 import play.api.test.{DefaultAwaitTimeout, FutureAwaits}
+import uk.gov.hmrc.domain.Generator
+import uk.gov.hmrc.http._
 import uk.gov.hmrc.ngchmrcdeskprocontract.scalatest.WSClientSpec
+import uk.gov.hmrc.ngchmrcdeskprocontract.support.authloginapi.LoginSupport
+
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class HmrcDeskproFeedbackSpec extends AsyncWordSpec
   with Matchers
   with FutureAwaits
   with DefaultAwaitTimeout
-  with WSClientSpec {
+  with WSClientSpec
+  with LoginSupport {
+
+  private val generator = new Generator(0)
 
   "/deskpro/feedback" should {
 
-    "return 200 with ticket_id for successful ticket create" in {
-      ???
+    "return ticket_id for successful ticket create" in {
+
+      val nino = generator.nextNino
+
+      withLoggedInUser(nino) { implicit hc =>
+        val createFeedbackResponse = await(httpRequests.createFeedback(nino))
+
+        createFeedbackResponse.ticket_id should be > 0l
+      }
+    }
+
+    "return 400 bad request when posting an invalid feedback with required field missing" in {
+
+      val nino = generator.nextNino
+
+      withLoggedInUser(nino) { implicit hc =>
+        val badRequestException = intercept[BadRequestException](await(httpRequests.createInvalidFeedback()))
+
+        badRequestException.responseCode shouldBe 400
+      }
     }
   }
 }

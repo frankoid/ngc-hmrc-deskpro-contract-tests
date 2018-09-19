@@ -2,8 +2,8 @@ package uk.gov.hmrc.ngchmrcdeskprocontract.hmrcdeskpro
 
 import play.api.libs.json.{Json, OFormat}
 
-case class CreateTicketResponse ( ticketId: Int )
+case class CreateTicketResponse ( ticket_id: Long )
 
-object HmrcDeskpro {
+object CreateTicketResponse {
   implicit val format: OFormat[CreateTicketResponse] = Json.format[CreateTicketResponse]
 }
